@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=emailDb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=!2345
+    volumes:
+      - db:/var/lib/postgresql/data
+  
+volumes:
+  db:
+    driver: local

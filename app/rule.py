@@ -3,15 +3,16 @@ import os
 import json
 
 from abc import ABC, abstractmethod
+from typing import Union
 from sqlalchemy import select
 from models import Email
 from db import SessionLocal
+from action import Action
 from predicate import Predicate, Contains, NotContains, NotEquals, Equals, All, Any, LessThan, GreaterThan
-from typing import Union
+
 
 
 Fields = set(["recv_from", "subject", "message", "date"])
-Predicates = set(['contains', 'notcontains', 'equals', 'notequals', 'any', 'all', 'ltndays', 'gtndays'])
 
 class Rule(ABC):
     """
@@ -103,12 +104,15 @@ class CompositeRule:
         session = SessionLocal()
         results = session.execute(query).all()
         return results
+    
+    def apply(self):
+        results = self.execute()
+        ids = [email_id for (email_id, _) in results]
+        for action in self.actions:
+            action(ids)
 
 
 def create_predicate(predicate):
-    if predicate not in Predicates:
-        raise ValueError(f"{predicate} must be one of {Predicates}.")
-    
     switcher: dict[str, Predicate] = {
         'contains': Contains(), 
         'notcontains': NotContains(), 
@@ -119,26 +123,35 @@ def create_predicate(predicate):
         'ltndays': GreaterThan(), 
         'gtndays': LessThan()
     }
+    if predicate not in switcher.keys():
+        raise ValueError(f"{predicate} must be one of {switcher.keys()}.")
 
     return switcher[predicate]
 
+
 def create_rule(schema):
     req_keys = {"predicate", "field", "value"}
-    if req_keys == set(schema.keys()):
-        if schema['field'] == 'date':
-            return DateRule(
-                predicate=create_predicate(schema["predicate"]),
-                field=schema["field"],
-                value=schema["value"]
-            )
-        else:
-            return StringRule(
-                predicate=create_predicate(schema["predicate"]),
-                field=schema["field"],
-                value=schema["value"]
-            )
-    else:
+    if req_keys != set(schema.keys()):
         raise ValueError("Properties required to create Rule are not present")
+    
+    if schema['field'] == 'date':
+        return DateRule(
+            predicate=create_predicate(schema["predicate"]),
+            field=schema["field"],
+            value=schema["value"]
+        )
+    else:
+        return StringRule(
+            predicate=create_predicate(schema["predicate"]),
+            field=schema["field"],
+            value=schema["value"]
+        )
+
+def create_action(schema):
+    req_key = {"action", "value"}
+    if req_key != set(schema.keys()):
+        raise ValueError("Properties required to create Action are not present")
+    return Action(schema["action"], schema["value"])
 
 def create_composite_rule(file_path):
     if not os.path.exists(file_path):
@@ -148,13 +161,12 @@ def create_composite_rule(file_path):
         rule_schema = json.load(fp)
 
     req_keys = {"predicate", "actions", "rules"}
-
-    if req_keys == set(rule_schema.keys()):
-        composite_rule = CompositeRule(
-            rules=[create_rule(rule) for rule in rule_schema['rules']],
-            predicate=create_predicate(rule_schema['predicate']),
-            actions=rule_schema['actions']
-        )
-        return composite_rule
-    else:
+    if req_keys != set(rule_schema.keys()):
         raise ValueError("Properties required to create Composite Rule are not present")
+    
+    composite_rule = CompositeRule(
+        rules=[create_rule(rule) for rule in rule_schema['rules']],
+        predicate=create_predicate(rule_schema['predicate']),
+        actions=[create_action(action) for action in rule_schema['actions']]
+    )
+    return composite_rule

@@ -1,6 +1,9 @@
 {
     "predicate": "all",
-    "actions": [],
+    "actions": [
+        {"action": "mark_as_unread", "value": ""},
+        {"action": "move", "value": "INBOX"}
+    ],
     "rules": [
         {"field": "subject", "value": "insurance", "predicate": "contains"}
     ]

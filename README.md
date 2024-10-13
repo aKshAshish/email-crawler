@@ -29,6 +29,43 @@ To load emails to database run the script *load_emails.py* from app folder.
     python main.py
 ```
 
+## Running Test Cases
+The test cases are run from project directory (i.e. parent directory of app). To run all the test cases run the following command
+```bash
+    python -m pytest
+```
+
+## Rule Details
+For reference some example rules are present in [example_rules.json](./app/example_rules.json).
+- Schema **Composite Rule**:
+```json
+    {
+        "predicate": "string",
+        "rules": ["Rule 1", "Rule 2"],
+        "actions": ["string"]
+    }
+```
+- **Rule** Schema:
+```json
+    {
+        "predicate": "string",
+        "value": "string|number",
+        "field": "string"
+    }
+```
+- **Fields** can be one of the following:
+```python
+('recv_from', 'date', 'subject', 'message')
+```
+- **Predicates** can be one of the following:
+```python
+('contains', 'notcontains' 'equals', 'notequals', 'any', 'all', 'ltndays', 'gtndays')
+```
+- **Actions** can be one of the follwing: 
+```python
+('mark_as_read', 'mark_as_unread', 'move')
+```
+
 ## Project Structure
 ```
 email-crawler/

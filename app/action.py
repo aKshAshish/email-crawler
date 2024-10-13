@@ -4,6 +4,9 @@ import json
 from util import load_creds
 
 class Action:
+    """
+    Class to represent and perform actions.
+    """
     SUPPORTED_ACTIONS = ('mark_as_read', 'mark_as_unread', 'move')
     def __init__(self, action: str, param="") -> None:
         if action not in self.SUPPORTED_ACTIONS:

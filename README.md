@@ -16,6 +16,15 @@ pip install -r requirements.txt
 ## Running Project
 Once all the steps above have been completed we can prepare our Database. If the docker is present on the machine we can use docker-compose file to run an instance of postgres that we can use. Or if we want to use existing postgres please update the properties in .env.
 
+To run a fresh postgres using docker run following command:
+```bash
+    # Run from the directory with docker-compose.yml file
+    # To start the docker container
+    docker-compose up -d
+    # To stop the container
+    docker-compose down
+```
+
 ### *Loading Emails to Database*: 
 To load emails to database run the script *load_emails.py* from app folder. If the argument for number of emails is not passed the script will only load 500 emails.
 ```bash

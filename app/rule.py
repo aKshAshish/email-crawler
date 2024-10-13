@@ -10,8 +10,6 @@ from db import SessionLocal
 from action import Action
 from predicate import Predicate, Contains, NotContains, NotEquals, Equals, All, Any, LessThan, GreaterThan
 
-
-
 Fields = set(["recv_from", "subject", "message", "date"])
 
 class Rule(ABC):

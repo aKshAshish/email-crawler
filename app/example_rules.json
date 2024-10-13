@@ -1,0 +1,58 @@
+[
+    {
+        "predicate": "all",
+        "actions": [
+            {"action": "mark_as_unread", "value": ""},
+            {"action": "move", "value": "INBOX"}
+        ],
+        "rules": [
+            {"field": "subject", "value": "insurance", "predicate": "contains"}
+        ]
+    },
+    {
+        "predicate": "all",
+        "actions": [
+            {"action": "mark_as_unread", "value": ""},
+            {"action": "move", "value": "INBOX"}
+        ],
+        "rules": [
+            {"field": "subject", "value": "insurance", "predicate": "contains"},
+            {"field": "recv_from", "value": "icici", "predicate": "not_contains"}
+        ]
+    },
+    {
+        "predicate": "any",
+        "actions": [
+            {"action": "mark_as_unread", "value": ""},
+            {"action": "move", "value": "INBOX"}
+        ],
+        "rules": [
+            {"field": "subject", "value": "insurance", "predicate": "contains"},
+            {"field": "recv_from", "value": "icici", "predicate": "contains"}
+        ]
+    },
+    {
+        "predicate": "all",
+        "actions": [
+            {"action": "mark_as_unread", "value": ""},
+            {"action": "move", "value": "INBOX"}
+        ],
+        "rules": [
+            {"field": "subject", "value": "insurance", "predicate": "contains"},
+            {"field": "recv_from", "value": "icici", "predicate": "contains"},
+            {"field": "date", "value": 2, "predicate": "ltndays"}
+        ]
+    },
+    {
+        "predicate": "all",
+        "actions": [
+            {"action": "mark_as_unread", "value": ""},
+            {"action": "move", "value": "INBOX"}
+        ],
+        "rules": [
+            {"field": "subject", "value": "insurance", "predicate": "contains"},
+            {"field": "recv_from", "value": "icici", "predicate": "contains"},
+            {"field": "date", "value": 2, "predicate": "gtndays"}
+        ]
+    }
+]

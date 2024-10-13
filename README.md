@@ -17,16 +17,20 @@ pip install -r requirements.txt
 Once all the steps above have been completed we can prepare our Database. If the docker is present on the machine we can use docker-compose file to run an instance of postgres that we can use. Or if we want to use existing postgres please update the properties in .env.
 
 ### *Loading Emails to Database*: 
-To load emails to database run the script *load_emails.py* from app folder.
+To load emails to database run the script *load_emails.py* from app folder. If the argument for number of emails is not passed the script will only load 500 emails.
 ```bash
     # if not in app directory
     cd app
-    python load_emails.py
+    # Will load 1000 emails from the gmail starting from recent
+    python load_emails.py -n 1000
 ```
 ### *Executing Rules*:
-- Once the emails are loaded. We can run our *main.py* file that executes the rule present in *rule.json* file.
+- Once the emails are loaded. We can run our *main.py* file that executes the rule present in *rule.json* file as default rule. If required the path to rule file can be passed as an argument as shown in the example.
 ```bash
+    # Runs default rule file rule.json
     python main.py
+    # Run the rule in the file provided
+    python main.py -p ex-rule.json
 ```
 
 ## Running Test Cases

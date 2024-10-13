@@ -1,6 +1,7 @@
 import os.path
 import json
 import base64
+import argparse
 
 from pathlib import Path
 from googleapiclient.discovery import build
@@ -10,7 +11,7 @@ from dotenv import load_dotenv
 from models import Email
 from util import load_creds
 
-MAX_RESULTS = 100
+MAX_RESULTS = 500
 
 def get_db():
     db = SessionLocal()
@@ -150,7 +151,7 @@ def fetch_emails(num: int):
 			break
 
 
-def load_emails(num=100):
+def load_emails(num):
 	"""
 	Loads emails to database.
 	"""
@@ -161,10 +162,24 @@ def load_emails(num=100):
 		print(f"An error occurred: {error}")
 
 
+def create_num_emails_parser():
+    parser = argparse.ArgumentParser(description='Specify the number of emails to load from gmail.')
+    parser.add_argument(
+        '-n', 
+        '--num', 
+        type=str, 
+        required=False, 
+        help='Number of emails to fetch from Gmail'
+    )
+    return parser
+
 if __name__ == "__main__":
+	parser = create_num_emails_parser()
+	args = parser.parse_args()
+	num = 500 if args["num"] is None else args["num"]
 	# Load environment variables
 	load_dotenv()
 	# Initialize database
 	init_db()
 	# Load Emails
-	load_emails(205)
+	load_emails(num)

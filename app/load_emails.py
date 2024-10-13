@@ -176,7 +176,7 @@ def create_num_emails_parser():
 if __name__ == "__main__":
 	parser = create_num_emails_parser()
 	args = parser.parse_args()
-	num = 500 if args["num"] is None else args["num"]
+	num = 500 if args.num is None else args.num
 	# Load environment variables
 	load_dotenv()
 	# Initialize database

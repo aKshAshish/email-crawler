@@ -19,7 +19,7 @@ def main():
     parser = create_file_parser()
     args = parser.parse_args()
 
-    path_to_rule = 'rule.json' if not args['path'] else args['path']
+    path_to_rule = 'rule.json' if not args.path else args.path
 
     # Load environment variables
     load_dotenv()

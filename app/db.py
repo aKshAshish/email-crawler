@@ -14,6 +14,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 def init_db():
+    """
+    Initializes DB and creates the tables.
+    """
     import models
     Base.metadata.create_all(engine)
-    print(Base.metadata.tables.keys())

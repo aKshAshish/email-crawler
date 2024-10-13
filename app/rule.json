@@ -1,0 +1,7 @@
+{
+    "predicate": "all",
+    "actions": [],
+    "rules": [
+        {"field": "subject", "value": "insurance", "predicate": "contains"}
+    ]
+}

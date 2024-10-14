@@ -27,6 +27,10 @@ email-crawler/
 
 <img src="./arch.png" alt="Architecture" width="720"/>
 
+## UML
+
+<img src="./UML-Email.png" alt="UML Diagram" width="1080"/>
+
 ## Project Setup
 1. To start clone the project and open the project directory.
 2. Once there create Python Virtual Environment: 

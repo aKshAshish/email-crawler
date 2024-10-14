@@ -1,5 +1,32 @@
 # email-crawler
 
+## Overview
+The project provides with scripts to lead emails from ones gmail account, store them and then perform some actions over the emails based on specified rules.
+
+## Project Structure
+```
+email-crawler/
+│
+├── app/
+│   ├── __init__.py
+│   ├── load_emails.py
+│   ├── main.py
+│   ├── db.py
+│   ├── *
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_util.py
+│   ├── test_action.py
+│
+├── README.md
+*
+```
+
+## Architecture
+
+<img src="./arch.png" alt="Architecture" width="720"/>
+
 ## Project Setup
 1. To start clone the project and open the project directory.
 2. Once there create Python Virtual Environment: 
@@ -82,25 +109,6 @@ For reference some example rules are present in [example_rules.json](./app/examp
 ('mark_as_read', 'mark_as_unread', 'move')
 ```
 
-## Project Structure
-```
-email-crawler/
-│
-├── app/
-│   ├── __init__.py
-│   ├── load_emails.py
-│   ├── main.py
-│   ├── db.py
-│   ├── *
-│
-├── tests/
-│   ├── __init__.py
-│   ├── test_util.py
-│   ├── test_action.py
-│
-├── README.md
-*
-```
 
 ## Future Improvements
 - *Load Email*

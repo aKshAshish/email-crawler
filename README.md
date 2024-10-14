@@ -101,3 +101,12 @@ email-crawler/
 ├── README.md
 *
 ```
+
+## Future Improvements
+- *Load Email*
+    - Improve load emails so it can recognise the files from the current run.
+    - Fetch emails from gmail concurrently using async or threads.
+    - Load data into DB in batches.
+- Bundle all the calls to gmail in a class and call it as an Agent. This way we can support multiple vendors if we want.
+- For now Action is a single class it can be sub divided like predicates.
+- Adding type checks.

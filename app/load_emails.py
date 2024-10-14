@@ -22,7 +22,6 @@ def load_email(email, db):
 	"""
 	Adds email to the database.
 	"""
-	print(f"Adding email: {email['id']}")
 	res = db.query(Email).filter_by(email_id = email['id']).first()
 	if res:
 		return
@@ -104,6 +103,8 @@ def load_emails_to_db():
 	"""
 	Goes through preloaded list of emails and fetches content of the email from gmail, parses it and loads the data into database.
 	"""
+	print("Loading emails...")
+	i = 0
 	DIR_EMAILS = os.environ.get("DIR_EMAILS")
 	db = get_db()
 	if os.path.exists(DIR_EMAILS):
@@ -117,12 +118,19 @@ def load_emails_to_db():
 				parsed_email = parse_email(result)
 				if parsed_email:
 					load_email(parsed_email, db)
+					i += 1
+				else:
+					print(f"Skipping email {email['id']} since no data is present.")
+				# Notify for loaded emails on the o/p screen
+				if i !=0 and i%25 == 0:
+						print(f"{i} emails have been loaded so far")
 
 
 def fetch_emails(num: int):
 	"""
 	Fetches email list from gmail.
 	"""
+	print("Fetching email list...")
 	# Gets credentials using Google OAuth Client
 	creds = load_creds()
 	# Call the Gmail API
@@ -167,7 +175,7 @@ def create_num_emails_parser():
     parser.add_argument(
         '-n', 
         '--num', 
-        type=str, 
+        type=int, 
         required=False, 
         help='Number of emails to fetch from Gmail'
     )

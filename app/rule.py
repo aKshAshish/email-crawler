@@ -106,6 +106,12 @@ class CompositeRule:
     def apply(self):
         results = self.execute()
         ids = [email_id for (email_id, _) in results]
+        if len(ids) == 0:
+            print("No emails found for this rule.")
+            return
+        
+        print(f"Following emails have been filtered by the rule: {ids}.")
+        print("Applying actions...")
         for action in self.actions:
             action(ids)
 

@@ -27,6 +27,9 @@ To run a fresh postgres using docker run following command:
 
 ### *Loading Emails to Database*: 
 To load emails to database run the script *load_emails.py* from app folder. If the argument for number of emails is not passed the script will only load 500 emails.
+> [!IMPORTANT]
+> Before loading emails to DB, the script gets the list of emails and stores in the folder pointed by DIR_EMAILS of .env file. So please make sure to delete the files from previous runs.
+
 ```bash
     # if not in app directory
     cd app
